@@ -1,0 +1,19 @@
+{
+  "name": "neat-scroll",
+  "version": "1.0.0",
+  "description": "Minimal smooth scroll independent from browser smooth api with zero dependency",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjyyxx/neat-scroll.git"
+  },
+  "author": "jjyyxx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jjyyxx/neat-scroll/issues"
+  },
+  "homepage": "https://github.com/jjyyxx/neat-scroll#readme"
+}

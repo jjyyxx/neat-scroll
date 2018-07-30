@@ -1,0 +1,75 @@
+/**
+ * 平滑滚动
+ * @param {Element} target 目标元素
+ * @param {Number} speed 滚动速度
+ * @param {Number} smooth 平滑系数
+ * @param {Boolean} vertical 方向是否为竖直
+ * @param {Function} callback 回调函数
+ */
+module.exports = function SmoothScroll(target, {
+  speed = 100,
+  smooth = 10,
+  vertical = true,
+  callback = () => {}
+} = {}) {
+  // member name initialization
+  let scrollLength, scrollPosition, clientLength
+  if (vertical) {
+    scrollLength = 'scrollHeight'
+    scrollPosition = 'scrollTop'
+    clientLength = 'clientHeight'
+  } else {
+    scrollLength = 'scrollWidth'
+    scrollPosition = 'scrollLeft'
+    clientLength = 'clientWidth'
+  }
+  // variable initialization
+  let moving, pos, scrollTimes, smoothTimes, lastDelta
+  function setValues() {
+    moving = false
+    pos = target[scrollPosition]
+    scrollTimes = 0
+    smoothTimes = 0
+    lastDelta = 0
+  }
+  setValues()
+
+  target.addEventListener('scroll', (e) => {
+    if (e.target !== target) return
+    if (++scrollTimes > smoothTimes) { // external non-smooth scroll invoked
+      setValues()
+    }
+  })
+
+  function update() {
+    moving = true
+    const decimalDelta = (pos - target[scrollPosition]) / smooth
+    const delta = Math.sign(decimalDelta) * Math.ceil(Math.abs(decimalDelta))
+    ++smoothTimes
+    if (Math.abs(decimalDelta) <= 0.1) {
+      target[scrollPosition] = pos
+      pos = target[scrollPosition]
+      moving = false
+    } else {
+      target[scrollPosition] += delta
+      lastDelta = decimalDelta
+      requestAnimationFrame(update)
+    }
+    callback(target)
+  }
+
+  return {
+    scrollByDelta(delta, smooth = true) {
+      this.scrollByPos(pos + delta / 100 * speed, smooth)
+    },
+    scrollByPos(position, smooth = true) {
+      pos = Math.max(0, Math.min(position, target[scrollLength] - target[clientLength] + 1)) // limit scrolling
+      if (smooth) {
+        if (lastDelta * (pos - target[scrollPosition]) < 0) lastDelta = 0
+        if (!moving) update()
+      } else {
+        target[scrollPosition] = pos
+      }
+    }
+  }
+}

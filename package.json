@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/jjyyxx/neat-scroll/issues"
   },
-  "homepage": "https://github.com/jjyyxx/neat-scroll#readme"
+  "homepage": "https://github.com/jjyyxx/neat-scroll#readme",
+  "devDependencies": {
+    "eslint": "^5.3.0"
+  }
 }

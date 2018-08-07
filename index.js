@@ -93,7 +93,7 @@ class NeatScroll {
     } else {
       this.scrollPosition += delta
       this.lastDelta = decimalDelta
-      requestAnimationFrame(this.update)
+      requestAnimationFrame(()=>this.update())
     }
     this.callback(this.target)
   }

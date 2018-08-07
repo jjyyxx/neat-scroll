@@ -21,13 +21,13 @@ class NeatScroll {
 
     // member name initialization
     if (vertical) {
-      this.scrollLength = 'scrollHeight'
-      this.scrollPosition = 'scrollTop'
-      this.clientLength = 'clientHeight'
+      this.scrollLengthName = 'scrollHeight'
+      this.scrollPositionName = 'scrollTop'
+      this.clientLengthName = 'clientHeight'
     } else {
-      this.scrollLength = 'scrollWidth'
-      this.scrollPosition = 'scrollLeft'
-      this.clientLength = 'clientWidth'
+      this.scrollLengthName = 'scrollWidth'
+      this.scrollPositionName = 'scrollLeft'
+      this.clientLengthName = 'clientWidth'
     }
 
     // variable initialization
@@ -45,24 +45,32 @@ class NeatScroll {
     return this._speed || NeatScroll.config.speed
   }
 
+  set speed(value) {
+    this._speed = value
+  }
+
   get smooth() {
     return this._smooth || NeatScroll.config.smooth
   }
 
+  set smooth(value) {
+    this._smooth = value
+  }
+
   get scrollPosition() {
-    return this.target[this.vertical ? 'scrollTop' : 'scrollLeft']
+    return this.target[this.scrollPositionName]
   }
 
   set scrollPosition(value) {
-    this.target[this.vertical ? 'scrollTop' : 'scrollLeft'] = value
+    this.target[this.scrollPositionName] = value
   }
 
   get clientLength() {
-    return this.target[this.vertical ? 'clientHeight' : 'clientWidth']
+    return this.target[this.clientLengthName]
   }
 
   get scrollLength() {
-    return this.target[this.vertical ? 'scrollHeight' : 'scrollWidth']
+    return this.target[this.scrollLengthName]
   }
 
   setValues() {

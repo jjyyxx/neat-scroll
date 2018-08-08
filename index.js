@@ -1,12 +1,4 @@
 class NeatScroll {
-  /**
-   * 平滑滚动
-   * @param {Element} target 目标元素
-   * @param {Number} speed 滚动速度
-   * @param {Number} smooth 平滑系数
-   * @param {Boolean} vertical 方向是否为竖直
-   * @param {Function} callback 回调函数
-   */
   constructor(target, {
     speed = null,
     smooth = null,

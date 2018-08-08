@@ -33,8 +33,8 @@ declare class NeatScroll {
    */
   constructor(target: ElementLike, config?: NeatScrollConfig)
 
-  scrollByDelta(delta: number, smooth: boolean)
-  scrollByPos(position: number, smooth: boolean)
+  scrollByDelta(delta: number, smoothing: boolean)
+  scrollByPos(position: number, smoothing: boolean)
 }
 
 export = NeatScroll

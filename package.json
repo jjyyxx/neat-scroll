@@ -1,6 +1,6 @@
 {
   "name": "neat-scroll",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Minimal smooth scroll independent from browser smooth api with zero dependency",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,7 @@
     "url": "https://github.com/jjyyxx/neat-scroll/issues"
   },
   "homepage": "https://github.com/jjyyxx/neat-scroll#readme",
+  "types": "./index.d.ts",
   "devDependencies": {
     "eslint": "^5.3.0"
   }

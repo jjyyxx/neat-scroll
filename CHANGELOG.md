@@ -1,6 +1,12 @@
 # CHANGELOG
 All notable changes to this project will be documented in this file.
 
+## 2.0.1
+
+### Features:
+
+  - Update `index.d.ts` to allow custom scroll target.
+
 ## 2.0.0
 
 ### Features:

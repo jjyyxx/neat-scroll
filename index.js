@@ -98,13 +98,13 @@ class NeatScroll {
     this.callback(this.target)
   }
 
-  scrollByDelta(delta, smooth = true) {
-    this.scrollByPos(this.pos + delta / 100 * this.speed, smooth)
+  scrollByDelta(delta, smoothing = true) {
+    this.scrollByPos(this.pos + delta / 100 * this.speed, smoothing)
   }
 
-  scrollByPos(position, smooth = true) {
+  scrollByPos(position, smoothing = true) {
     this.pos = Math.max(0, Math.min(position, this.scrollLength - this.clientLength + 1)) // limit scrolling
-    if (smooth) {
+    if (smoothing) {
       if (this.lastDelta * (this.pos - this.scrollPosition) < 0) this.lastDelta = 0
       if (!this.moving) this.update()
     } else {

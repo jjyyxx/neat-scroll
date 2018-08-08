@@ -1,3 +1,10 @@
+type VerticalKeys = 'scrollTop' | 'scrollHeight' | 'clientHeight'
+type HorizontalKeys = 'scrollLeft' | 'scrollWidth' | 'clientWidth'
+
+type ElementLike = (Pick<Element, VerticalKeys> | Pick<Element, HorizontalKeys>) & {
+  addEventListener(type: 'scroll', listener: (ev: Event) => any): void
+}
+
 interface NeatScrollGlobalConfig {
   /** 滚动速度 */
   speed: number
@@ -14,20 +21,20 @@ interface NeatScrollLocalConfig {
 
 type NeatScrollConfig = Partial<NeatScrollGlobalConfig & NeatScrollLocalConfig>
 
-export class NeatScroll {
+declare class NeatScroll {
   /**
    * 全局配置。其中`smooth`默认为`10`，`speed`默认为`100`。
    */
   static config: NeatScrollGlobalConfig
 
   /**
-   * @param target 目标元素
+   * @param target 目标元素，或者符合接口的自定义对象
    * @param config 局部配置
    */
-  constructor(target: HTMLElement, config?: NeatScrollConfig)
+  constructor(target: ElementLike, config?: NeatScrollConfig)
 
-  scrollByDelta(delta: number, smooth = true)
-  scrollByPos(position: number, smooth = true)
+  scrollByDelta(delta: number, smooth: boolean)
+  scrollByPos(position: number, smooth: boolean)
 }
 
 export = NeatScroll

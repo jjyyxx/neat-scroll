@@ -1,22 +1,23 @@
-class NeatScroll {
+const EventEmitter = require('events')
+
+class NeatScroll extends EventEmitter {
   /**
    * 平滑滚动
    * @param {Element} target 目标元素
    * @param {Number} speed 滚动速度
    * @param {Number} smooth 平滑系数
    * @param {Boolean} vertical 方向是否为竖直
-   * @param {Function} callback 回调函数
    */
   constructor(target, {
     speed = null,
     smooth = null,
     vertical = true,
-    callback = () => {}
   } = {}) {
+
+    super()
     this.target = target
     this._speed = speed
     this._smooth = smooth
-    this.callback = callback
     this.vertical = vertical
 
     // member name initialization
@@ -34,11 +35,13 @@ class NeatScroll {
     this.setValues()
     target.addEventListener('scroll', (event) => {
       if (event.target !== target) return
-      if (++this.scrollTimes > this.smoothTimes) {
+      if (++ this.scrollTimes > this.smoothTimes) {
         // external non-smooth scroll invoked
         this.setValues()
       }
     })
+
+    this.emitEvent('create')
   }
 
   get speed() {
@@ -77,6 +80,15 @@ class NeatScroll {
     return this.target[this.scrollLengthName]
   }
 
+  emitEvent(eventName) {
+    this.emit(eventName, {
+      target: this.target,
+      clientLength: this.clientLength,
+      scrollLength: this.scrollLength,
+      scrollPosition: this.scrollPosition,
+    })
+  }
+
   setValues() {
     this.moving = false
     this.pos = this.scrollPosition
@@ -94,16 +106,14 @@ class NeatScroll {
       this.scrollPosition = this.pos
       this.pos = this.scrollPosition
       this.moving = false
+      this.emitEvent('update')
+      this.emitEvent('scroll-end')
     } else {
       this.scrollPosition += delta
       this.lastDelta = decimalDelta
+      this.emitEvent('update')
       requestAnimationFrame(() => this.update())
     }
-    this.callback(this.target, {
-      scrollPosition: this.scrollPosition,
-      scrollLength: this.scrollLength,
-      clientLength: this.clientLength,
-    })
   }
 
   scrollByDelta(delta, smoothing = true) {
@@ -111,6 +121,7 @@ class NeatScroll {
   }
 
   scrollByPos(position, smoothing = true) {
+    this.emitEvent('scroll-start')
     this.pos = Math.max(0, Math.min(position, this.scrollLength - this.clientLength + 1)) // limit scrolling
     if (smoothing) {
       if (this.lastDelta * (this.pos - this.scrollPosition) < 0) this.lastDelta = 0

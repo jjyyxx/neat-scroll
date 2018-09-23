@@ -3,7 +3,7 @@
 Minimal smooth scroll independent from browser smooth api with zero dependency.
 
 Usage:
-```javascript
+```js
 const NeatScroll = require('neat-scroll')
 
 const scroll = new NeatScroll(document.getElementById('divToScroll'))
@@ -29,7 +29,6 @@ Generates a NeatScroll instance.
 - config.speed: scroll speed.
 - config.smooth: smoothing parameter.
 - config.vertical: whether to scroll vertically (default value is `true`).
-- config.vallback: a function called when the scroll position updated.
 
 ### neatScroll.scrollByPos(position: number, smoothing: boolean)
 
@@ -40,4 +39,11 @@ Generates a NeatScroll instance.
 
 - delta: the delta position of target.
 - smoothing: whether a smooth scroll is used.
+
+### events
+
+- create: emit after a NeatScroll instance is created
+- update: emit when the scroll position is updated
+- scroll-start: emit when a scroll behavior is started
+- scroll-end: emit when a scroll behavior is finished
 

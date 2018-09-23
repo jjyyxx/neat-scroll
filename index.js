@@ -34,7 +34,9 @@ class NeatScroll {
   }
 
   get speed() {
-    return this._speed || NeatScroll.config.speed
+    return typeof this._speed === 'number' && this._speed > 0 
+      ? this._speed
+      : NeatScroll.config.speed
   }
 
   set speed(value) {
@@ -42,7 +44,9 @@ class NeatScroll {
   }
 
   get smooth() {
-    return this._smooth || NeatScroll.config.smooth
+    return typeof this._smooth === 'number' && this._smooth > 0 
+      ? this._smooth
+      : NeatScroll.config.smooth
   }
 
   set smooth(value) {
@@ -85,9 +89,13 @@ class NeatScroll {
     } else {
       this.scrollPosition += delta
       this.lastDelta = decimalDelta
-      requestAnimationFrame(()=>this.update())
+      requestAnimationFrame(() => this.update())
     }
-    this.callback(this.target)
+    this.callback(this.target, {
+      scrollPosition: this.scrollPosition,
+      scrollLength: this.scrollLength,
+      clientLength: this.clientLength,
+    })
   }
 
   scrollByDelta(delta, smoothing = true) {
